@@ -1,30 +1,19 @@
 import "../styles.css";
+import { getRatingClass, imageTagErrorHandler } from "./Utils";
 
 export default function MoviesCard({ movie, isWatchlisted, toggleWatchlist }) {
-  const errorHandler = (e) => {
-    e.target.src = "images.defailt.jpg";
-  };
-
-  const getRatingClass = (rating) => {
-    if (rating >= 8) return "rating-good";
-    if (rating >= 5 && rating < 8) return "rating-ok";
-    return "rating-bad";
-  };
+  const { id, title, image, rating, genre } = movie;
 
   return (
-    <div key={movie.id} className="movie-card">
-      <img
-        src={`images/${movie.image}`}
-        alt={movie.title}
-        onError={errorHandler}
-      />
+    <div key={id} className="movie-card">
+      <img src={`images/${image}`} alt={title} onError={imageTagErrorHandler} />
       <div className="movie-card-info">
-        <h3 className="movie-card-title">{movie.title}</h3>
+        <h3 className="movie-card-title">{title}</h3>
 
         <div>
-          <span className="movie-card-genre">{movie.genre}</span>
-          <span className={`movie-card-rating ${getRatingClass(movie.rating)}`}>
-            {movie.rating}
+          <span className="movie-card-genre">{genre}</span>
+          <span className={`movie-card-rating ${getRatingClass(rating)}`}>
+            {rating}
           </span>
         </div>
 
@@ -32,7 +21,7 @@ export default function MoviesCard({ movie, isWatchlisted, toggleWatchlist }) {
           <input
             type="checkbox"
             checked={isWatchlisted}
-            onChange={() => toggleWatchlist(movie.id)}
+            onChange={() => toggleWatchlist(id)}
           ></input>
           <span className="slider">
             <span className="slider-label">
